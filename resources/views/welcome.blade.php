@@ -10,7 +10,7 @@
 </head>
 
 <body>
-    @livewire('hello-world')
+    @livewire('hello-world',['name' => 'Phoe La Pyae'])
     @livewireScripts
 </body>
 
