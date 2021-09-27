@@ -13,7 +13,7 @@ use Livewire\LivewireManager;
 
 class RegistrationTest extends TestCase
 {
-    use RefreshDatabase;
+    // use RefreshDatabase;
 
     /** @test */
     function can_register()

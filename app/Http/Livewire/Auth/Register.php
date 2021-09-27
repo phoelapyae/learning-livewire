@@ -21,11 +21,13 @@ class Register extends Component
             'password' => 'required|min:6|same:passwordConfirmation',
         ]);
 
-        User::create([
+        $user = User::create([
             'name' => $this->name,
             'email' => $this->email,
             'password' => Hash::make($this->password)
         ]);
+
+        auth()->login($user);
 
         return redirect('/');
     }
@@ -39,6 +41,6 @@ class Register extends Component
 
     public function render()
     {
-        return view('livewire.auth.register');
+        return view('livewire.auth.register')->layout('layouts.auth');
     }
 }
