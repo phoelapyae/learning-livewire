@@ -66,4 +66,32 @@ class ProfileTest extends TestCase
             ->call('save')
             ->assertHasErrors(['about' => 'max']);
     }
+
+    /** @test */
+    public function profile_info_is_prepopulated()
+    {
+        $user = User::factory()->create([
+            'name' => 'foo',
+            'about' => 'bar'
+        ]);
+
+        Livewire::actingAs($user)
+            ->test('profile')
+            ->assertSet('name', 'foo')
+            ->assertSet('about', 'bar');
+    }
+
+    /** @test */
+    public function message_shown_on_save()
+    {
+        $user = User::factory()->create([
+            'name' => 'foo',
+            'about' => 'bar'
+        ]);
+
+        Livewire::actingAs($user)
+            ->test('profile')
+            ->call('save')
+            ->assertEmitted('notify-saved');
+    }
 }
