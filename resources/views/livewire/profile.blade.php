@@ -8,8 +8,12 @@
                 <x-input.text wire:model="name" id="name" leading-add-on="surge.com/" />
             </x-input.group>
 
+            <x-input.group label="Birthday" for="birthday" :error="$errors->first('birthday')">
+                <x-input.date wire:model.lazy="birthday" id="birthday" placeholder="MM/DD/YYYY" />
+            </x-input.group>
+
             <x-input.group label="About" for="about" :error="$errors->first('about')" help-text="Write a few sentences about yourself.">
-                <x-input.textarea wire:model="about" id="about" />
+                <x-input.rich-text wire:model.lazy="about" :initial-value="$about" id="about" />
             </x-input.group>
 
             <x-input.group label="Profile" for="profile">

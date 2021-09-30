@@ -8,6 +8,7 @@ class Profile extends Component
 {
     public $name = '';
     public $about = '';
+    public $birthday = null;
     // public $saved = false;
 
     // protected $listeners = ['notify-saved'];
@@ -16,14 +17,18 @@ class Profile extends Component
     {
         $this->name = auth()->user()->name;
         $this->about = auth()->user()->about;
+        $this->birthday = optional(auth()->user()->birthday)->format('m/d/Y');
     }
 
     public function save()
     {
         $profileData = $this->validate([
             'name' => 'required|max:24',
-            'about' => 'required|max:140'
+            'about' => 'required|max:140',
+            'birthday' => 'required'
         ]);
+
+        // dd($profileData);
 
         auth()->user()->update($profileData);
 
