@@ -33,11 +33,11 @@
                     <a href="/profile" class="flex-shrink-0 group block focus:outline-none">
                         <div class="flex items-center">
                             <div>
-                                <img class="inline-block h-10 w-10 rounded-full" src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&amp;ixid=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=facearea&amp;facepad=2&amp;w=256&amp;h=256&amp;q=80" alt="">
+                                <img class="inline-block h-10 w-10 rounded-full" src="{{ auth()->user()->avatarUrl() }}" alt="Profile Photo">
                             </div>
                             <div class="ml-3">
                                 <p class="text-base leading-6 font-medium text-white">
-                                    Paul Weamer
+                                    {{ auth()->user()->name }}
                                 </p>
                                 <p class="text-sm leading-5 font-medium text-indigo-300 group-hover:text-indigo-100 group-focus:underline transition ease-in-out duration-150">
                                     View profile
@@ -75,12 +75,12 @@
                 <a href="/profile" class="flex-shrink-0 w-full group block">
                     <div class="flex items-center">
                         <div>
-                            <img class="inline-block h-9 w-9 rounded-full" src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&amp;ixid=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=facearea&amp;facepad=2&amp;w=256&amp;h=256&amp;q=80" alt="">
+                            <img class="inline-block h-9 w-9 rounded-full" src="{{ auth()->user()->avatarUrl() }}" alt="Profile Photo">
                         </div>
 
                         <div class="ml-3">
                             <p class="text-sm leading-5 font-medium text-white">
-                                Paul Weamer
+                                {{ auth()->user()->name }}
                             </p>
 
                             <p class="text-xs leading-4 font-medium text-indigo-300 group-hover:text-indigo-100 transition ease-in-out duration-150">

@@ -6,6 +6,7 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\Storage;
 use Laravel\Sanctum\HasApiTokens;
 
 class User extends Authenticatable
@@ -23,6 +24,7 @@ class User extends Authenticatable
         'email',
         'birthday',
         'password',
+        'avatar'
     ];
 
     /**
@@ -44,4 +46,11 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'birthday' => 'date'
     ];
+
+    public function avatarUrl()
+    {
+        return $this->avatar
+            ? Storage::disk('avatars')->url($this->avatar)
+            : 'https://www.gravatar.com/avatar/' . md5(strtolower(trim($this->email)));
+    }
 }
