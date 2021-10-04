@@ -5,32 +5,27 @@
         <div class="mt-6 sm:mt-5 space-y-5">
 
             <x-input.group label="User Name" for="name" :error="$errors->first('name')">
-                <x-input.text wire:model="name" id="name" leading-add-on="surge.com/" />
+                <x-input.text wire:model="user.name" id="name" leading-add-on="surge.com/" />
             </x-input.group>
 
             <x-input.group label="Birthday" for="birthday" :error="$errors->first('birthday')">
-                <x-input.date wire:model.lazy="birthday" id="birthday" placeholder="MM/DD/YYYY" autocomplete="off" />
+                <x-input.date wire:model.lazy="user.birthday" id="birthday" placeholder="MM/DD/YYYY" autocomplete="off" />
             </x-input.group>
 
             <x-input.group label="About" for="about" :error="$errors->first('about')" help-text="Write a few sentences about yourself.">
-                <x-input.rich-text wire:model.lazy="about" :initial-value="$about" id="about" />
+                <x-input.rich-text wire:model.lazy="user.about" :initial-value="$user->about" id="about" />
             </x-input.group>
 
-            <x-input.group label="Profile" for="photo" :error="$errors->first('newAvatar')">
-
-                <!-- <span class="h-12 w-12 rounded-full overflow-hidden bg-gray-100">
-                    @if ($newAvatar)
-                    <img class="h-12 w-12" src="{{ $newAvatar->temporaryUrl() }}" alt="Profile Photo">
-                    @else
-                    <img class="h-12 w-12" src="{{ auth()->user()->avatarUrl() }}" alt="Profile Photo">
-                    @endif
-                </span> -->
-
-                @foreach($files as $file)
-                <img src="{{ $file->temporaryUrl() }}">
-                @endforeach
-
-                <x-input.filepond wire:model="files" />
+            <x-input.group label="Profile" for="profile" :error="$errors->first('newAvatar')">
+                <x-input.upload-photo id="photo" wire:model="newAvatar">
+                    <span class="h-12 w-12 rounded-full overflow-hidden bg-gray-100">
+                        @if ($newAvatar)
+                        <img class="h-12 w-12" src="{{ $newAvatar->temporaryUrl() }}" alt="Profile Photo">
+                        @else
+                        <img class="h-12 w-12" src="{{ auth()->user()->avatarUrl() }}" alt="Profile Photo">
+                        @endif
+                    </span>
+                </x-input.upload-photo>
             </x-input.group>
         </div>
 

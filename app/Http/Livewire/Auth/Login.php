@@ -8,21 +8,17 @@ class Login extends Component
 {
     public $email = '';
     public $password = '';
+    protected $rules = [
+        'email' => 'required|email',
+        'password' => 'required|min:6'
+    ];
 
     public function login()
     {
-        $credentials = $this->validate([
-            'email' => 'required|email',
-            'password' => 'required|min:6'
-        ]);
+        $credentials = $this->validate();
 
-        if (!auth()->attempt($credentials)) {
+        return auth()->attempt($credentials) ? redirect()->intended('/') :
             $this->addError('email', trans('auth.failed'));
-
-            return;
-        }
-
-        return redirect()->intended('/');
     }
 
     public function render()

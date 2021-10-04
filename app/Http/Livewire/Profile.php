@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire;
 
+use App\Models\User;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 
@@ -9,42 +10,33 @@ class Profile extends Component
 {
     use WithFileUploads;
 
-    public $name = '';
-    public $about = '';
-    public $birthday = null;
+    public User $user;
     public $newAvatar;
-    public $files = [];
 
-    // public $saved = false;
-
-    // protected $listeners = ['notify-saved'];
+    protected $rules = [
+        'user.name' => 'required|max:24',
+        'user.about' => 'required|max:140',
+        'user.birthday' => 'sometimes',
+        'newAvatar' => 'nullable|image|mimes:png,jpg,jpeg|max:2048'
+    ];
 
     public function mount()
     {
-        $this->name = auth()->user()->name;
-        $this->about = auth()->user()->about;
-        $this->birthday = optional(auth()->user()->birthday)->format('m/d/Y');
+        $this->user = auth()->user();
     }
 
     public function save()
     {
-        $profileData = $this->validate([
-            'name' => 'required|max:24',
-            'about' => 'required|max:140',
-            'birthday' => 'required',
-            'newAvatar' => 'image|mimes:png,jpg,jpeg|max:2048'
-        ]);
+        $profileData = $this->validate();
 
-        $filename = $this->newAvatar->store('/', 'avatars');
-        $profileData['avatar'] = $filename;
+        $this->user->save();
 
-        auth()->user()->update($profileData);
+        if ($this->newAvatar) {
+            $filename = $this->newAvatar->store('/', 'avatars');
+            $this->user->update(['avatar' => $filename]);
+        }
 
         $this->emitSelf('notify-saved');
-
-        // session()->flash('notify-saved');
-
-        // $this->dispatchBrowserEvent('notify', 'Profile saved!');
     }
 
     public function updatedNewAvatar()
@@ -53,18 +45,6 @@ class Profile extends Component
             'newAvatar' => 'image|max:2048'
         ]);
     }
-
-    // public function updated($field)
-    // {
-    //     if ($field !== 'saved') {
-    //         $this->saved = false;
-    //     }
-    // }
-
-    // public function setAsUnsave()
-    // {
-    //     $this->saved = false;
-    // }
 
     public function render()
     {

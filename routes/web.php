@@ -1,15 +1,19 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Livewire\Dashboard;
+use App\Http\Livewire\Profile;
+use App\Http\Livewire\Auth\Register;
+use App\Http\Livewire\Auth\Login;
 
 Route::redirect('/', 'dashboard');
 
 Route::middleware('auth')->group(function () {
-    Route::get('/dashboard', \App\Http\Livewire\Dashboard::class);
-    Route::get('/profile', \App\Http\Livewire\Profile::class);
+    Route::get('/dashboard', Dashboard::class);
+    Route::get('/profile', Profile::class);
 });
 
 Route::middleware('guest')->group(function () {
-    Route::get('/register', \App\Http\Livewire\Auth\Register::class)->name('auth.register');
-    Route::get('/login', \App\Http\Livewire\Auth\Login::class)->name('auth.login');
+    Route::get('/register', Register::class)->name('auth.register');
+    Route::get('/login', Login::class)->name('auth.login');
 });

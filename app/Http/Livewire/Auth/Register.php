@@ -13,13 +13,15 @@ class Register extends Component
     public $password = '';
     public $passwordConfirmation = '';
 
+    protected $rules = [
+        'name' => 'required',
+        'email' => 'required|email|unique:users',
+        'password' => 'required|min:6|same:passwordConfirmation',
+    ];
+
     public function register()
     {
-        $data = $this->validate([
-            'name' => 'required',
-            'email' => 'required|email|unique:users',
-            'password' => 'required|min:6|same:passwordConfirmation',
-        ]);
+        $data = $this->validate();
 
         $user = User::create([
             'name' => $this->name,
